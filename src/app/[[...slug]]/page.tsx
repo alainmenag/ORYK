@@ -18,6 +18,17 @@ import Footer from '../../components/Footer/Footer';
 
 import clientPromise from '@/lib/mongodb';
 
+/*
+export async function generateMetadata()
+{
+	console.log('generateMetadata');
+	return {
+		title: "test",
+		description: "desc",
+	};
+}
+*/
+
 export default async function Page(
 	//props:any
 ) {
@@ -25,8 +36,8 @@ export default async function Page(
 	//const query = await props.searchParams;
 
 	const headersList = await headers();
-	const host = headersList.get('host');
-	const pathname = `${headersList.get('x-pathname')}`;
+	const host = process.env.HOSTNAME || headersList.get('host');
+	const pathname = `${ headersList.get('x-pathname') }`;
 
 	const client = await clientPromise;
 	const db = client.db('oryk');
@@ -64,7 +75,6 @@ export default async function Page(
 		description: 'The page you are looking for does not exist.',
 		style: {
 			textAlign: 'center',
-			//backgroundColor: 'red',
 		}
 	}];
 
@@ -94,6 +104,10 @@ export default async function Page(
 	if (!page?.sections?.length) page.sections.push({
 		template: 'hero',
 		title: 'Empty Page',
+		description: 'No sections found for this page.',
+		style: {
+			textAlign: 'center',
+		}
 	});
 
 	links.nav = (await db.collection('profiles').find({

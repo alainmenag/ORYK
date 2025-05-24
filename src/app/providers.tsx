@@ -11,9 +11,9 @@ const theme = createTheme(); // You can customize it
 
 export function Providers({ children }: { children: ReactNode }) {
 	return (
-		<CacheProvider value={clientSideEmotionCache}>
-			<ThemeProvider theme={theme}>
-				{children}
+		<CacheProvider value={ clientSideEmotionCache }>
+			<ThemeProvider theme={ theme }>
+				{ children }
 			</ThemeProvider>
 		</CacheProvider>
 	);
