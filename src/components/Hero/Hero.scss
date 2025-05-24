@@ -4,6 +4,10 @@
 // 	margin: 0 auto;
 // }
 
+.hero * {
+	word-break: break-word;
+}
+
 .hero {
 	display: flex;
 	justify-content: center;
