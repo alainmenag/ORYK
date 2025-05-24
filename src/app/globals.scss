@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@fontsource/roboto/300.css;
+@fontsource/roboto/400.css;
+@fontsource/roboto/500.css;
+@fontsource/roboto/700.css;
+
+:root {
+	--primaryColor: #3f51b5;
+	--desktop: 1024px;
+	--tablet: 768px;
+	--mobile: 480px;
+}
+
+html {
+	cursor: grab;
+}
+
+.hide {
+	display: none !important;
+}
+
+.container {
+	margin: auto;
+}
+
+section.section {
+	min-height: 50vh;
+	display: flex;
+}

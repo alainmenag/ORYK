@@ -1,0 +1,43 @@
+
+.slideshow {
+	background-size: cover;
+	background-position: center;
+	position: relative;
+	background-attachment: fixed;
+}
+
+@supports (-webkit-touch-callout: none) {
+	.slideshow {
+	  background-attachment: scroll;
+	}
+   }
+
+.slideshow .inside {
+	display: flex;
+	min-height: 100vh;
+	flex-direction: column;
+	backdrop-filter: blur(15px);
+	background-color: rgba(0, 0, 0, 0.5);
+	justify-content: center;
+	align-items: center;
+	padding: 125px 45px;
+	gap: 25px;
+}
+
+.slideshow .title {
+	color: #ffffff;
+	word-break: break-word;
+	text-align: center;
+	line-height: 1;
+	font-weight: bold;
+	width: 100%;
+}
+
+.slideshow .description {
+	color: #ffffff;
+	word-break: break-word;
+	text-align: center;
+	font-weight: 300;
+	line-height: 1;
+	width: 100%;
+}
