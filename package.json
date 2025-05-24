@@ -3,10 +3,10 @@
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {
-		"dev": "next dev --turbopack",
+		"dev": "chmod 777 ./server.development.sh && ./server.development.sh",
+		"start": "chmod 777 ./server.production.sh && ./server.production.sh",
 		"build": "next build",
 		"rebuild": "rm -rf .next && next build",
-		"start": "next start",
 		"lint": "next lint"
 	},
 	"dependencies": {
