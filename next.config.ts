@@ -6,6 +6,9 @@ const nextConfig: NextConfig = {
 		'localhost',
 		'::1',
 		process.env.DEV_ENV_IP || 'localhost',
+		'oryk.com',
+		'dev.oryk.com',
+		'www.oryk.com',
 	]
 };
 

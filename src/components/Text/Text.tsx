@@ -15,7 +15,7 @@ const ResizableText: React.FC<{ children: any, props: any } & any> = ({ children
 		whiteSpace: 'normal', // allows text wrapping
 		width: '100%', // Ensures the container width is fully responsive
 		lineHeight: '1', // Adjust line height for better readability
-		overflow: 'hidden', // Prevent overflow
+		//overflow: 'hidden', // Prevent overflow
 	 };
 
 	// Function to update the font size based on the container width
