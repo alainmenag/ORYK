@@ -5,7 +5,7 @@
 
 import Box from '@mui/material/Box';
 
-import { headers } from 'next/headers';
+import { location } from '../location'
 
 import Header from '../../components/Header/Header';
 import Hero from '../../components/Hero/Hero';
@@ -16,44 +16,23 @@ import Footer from '../../components/Footer/Footer';
 //import Card from '../../components/Card';
 //import Tiers from '../../components/Tiers';
 
-import clientPromise from '@/lib/mongodb';
+export async function generateMetadata(
+	props: any
+) {
+	const loc: any = await location({ props });
 
-/*
-export async function generateMetadata()
-{
-	console.log('generateMetadata');
 	return {
-		title: "test",
-		description: "desc",
+		title: loc.title,
+		description: loc.description,
 	};
 }
-*/
 
 export default async function Page(
-	//props:any
+	props: any
 ) {
-	//const params = await props.params;
-	//const query = await props.searchParams;
-
-	const headersList = await headers();
-	const host = process.env.HOSTNAME || headersList.get('host');
-	const pathname = `${ headersList.get('x-pathname') }`;
-
-	const client = await clientPromise;
-	const db = client.db('oryk');
+	const { provider, page, hostname, db } = await location({ props });
 
 	const links: any = {};
-
-	const provider: any = await db.collection('profiles').findOne({
-		category: 'providers',
-		hosts: host,
-	}) || {};
-
-	const page: any = (await db.collection('profiles').findOne({
-		category: 'pages',
-		hosts: host,
-		slug: pathname,
-	})) || {};
 
 	// setup page
 	page.title = page?.title || 'Page';
@@ -62,7 +41,7 @@ export default async function Page(
 	if (!page.sections.length && !provider?._id) page.sections = [{
 		template: 'hero',
 		title: 'Provider Not Found',
-		description: 'There is no provider registered for this host.',
+		description: 'There is no provider registered for this hostname.',
 		style: {
 			textAlign: 'center',
 			//backgroundColor: 'red',
@@ -112,7 +91,7 @@ export default async function Page(
 
 	links.nav = (await db.collection('profiles').find({
 		category: 'pages',
-		hosts: host,
+		hosts: hostname,
 		place: 'navigator',
 		weight: { $ne: -1 }
 	}, {
@@ -132,7 +111,7 @@ export default async function Page(
 
 	links.footer = (await db.collection('profiles').find({
 		category: 'pages',
-		hosts: host,
+		hosts: hostname,
 		place: 'quick',
 		weight: { $ne: -1 }
 	}, {
@@ -156,7 +135,20 @@ export default async function Page(
 
 	return (
 		<>
-			<Header links={links.nav} />
+
+			<style>
+				{`
+					:root {
+						--color-primary: ${provider.colors?.primary};
+						--color-secondary: ${provider.colors?.secondary};
+						--color-light: ${provider.colors?.light};
+						--color-dark: ${provider.colors?.dark};
+					}
+				`}
+			</style>
+
+			<Header logo={provider.logo} links={links.nav} />
+
 			<main style={{
 				backgroundColor: '#ffffff',
 			}}>
@@ -173,7 +165,9 @@ export default async function Page(
 					);
 				})}
 			</main>
-			<Footer links={links.footer} />
+
+			<Footer logo={provider.logo} links={links.footer} />
+
 		</>
 	);
 }

@@ -1,15 +1,5 @@
 
-import { headers } from 'next/headers';
-
-import clientPromise from '@/lib/mongodb';
-
-//import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-
-import '@fontsource/roboto/300.css?v=1.0.8';
-import '@fontsource/roboto/400.css?v=1.0.8';
-import '@fontsource/roboto/500.css?v=1.0.8';
-import '@fontsource/roboto/700.css?v=1.0.8';
 
 import { Providers } from './providers';
 
@@ -24,54 +14,6 @@ const geistMono = Geist_Mono({
 	variable: "--font-geist-mono",
 	subsets: ["latin"],
 });
-
-export async function generateMetadata()
-{
-	const headersList = await headers();
-	const host = process.env.HOSTNAME || headersList.get('host');
-	const pathname = `${headersList.get('x-pathname')}`;
-
-	const client = await clientPromise;
-	const db = client.db('oryk');
-
-	const provider: any = await db.collection('profiles').findOne({
-		category: 'providers',
-		hosts: host,
-	}, {
-		projection: {
-			title: 1,
-			description: 1,
-			_id: 1,
-		}
-	}) || {};
-
-	const page: any = await db.collection('profiles').findOne({
-		category: 'pages',
-		hosts: host,
-		slug: pathname
-	}, {
-		projection: {
-			title: 1,
-			description: 1,
-			_id: 1,
-		}
-	}) || {};
-
-	provider.title = provider?.title || 'Site';
-
-	let title = provider.title;
-
-	if (pathname) title = ` ${`${pathname}`.toUpperCase().split('/').join(' | ')} - ${provider.title}`;
-
-	if (page?.title) title = `${page.title} - ${provider.title}`;
-
-	if (!page?._id) title = `Page Not Found - ${provider.title}`;
-
-	return {
-		title,
-		description: page?.description || provider?.description,
-	};
-}
 
 export default async function RootLayout({
 	children,
@@ -98,10 +40,6 @@ export default async function RootLayout({
 							--desktop: 1024px;
 							--tablet: 768px;
 							--mobile: 480px;
-							--color-primary: #E91E63;
-							--color-secondary: #3f51b5;
-							--color-light: #f2f2f2;
-							--color-dark: #0d1128;
 						}
 					`}
 				</style>
@@ -110,9 +48,7 @@ export default async function RootLayout({
 			<body
 				className={ `${ geistSans.variable } ${ geistMono.variable } antialiased` }
 			>
-				<Providers>
-					{ children } 
-				</Providers>
+				<Providers>{ children }</Providers>
 
 				<script src="/vendor/jquery-3.7.1.min.js?v=1.0.8" async></script>
 				<script src="/vendor/utterscroll-master/jquery-scrollable.js?v=1.0.8" async></script>

@@ -98,7 +98,7 @@ export default function Navigator(attrs: any)
 				<div className="nav-wrapper">
 					<div className='logo'>
 						<Link href="/">
-							<Icon src="logo" />
+							<Icon src={attrs.logo || 'logo'} />
 						</Link>
 					</div>
 					<Nav links={ attrs.links } />

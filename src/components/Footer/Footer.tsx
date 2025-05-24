@@ -26,7 +26,7 @@ export default function Footer(attrs: any)
 					) : null }
 					<div className={ attrs?.links.length ? 'side right' : 'side full' }>
 						<Link href="/">
-							<Icon src="logo" />
+							<Icon src={ attrs.logo || "logo" } className="logo" />
 						</Link>
 					</div>
 				</div>
