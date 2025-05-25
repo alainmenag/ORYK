@@ -1,7 +1,7 @@
 
 import { promises as fs } from 'fs';
-import path from 'path';
 
+import path from 'path';
 
 export async function GET() {
 	const imagePath = path.join(process.cwd(), 'public/artwork/file-not-found.webp');

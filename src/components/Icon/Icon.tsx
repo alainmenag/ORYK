@@ -1,7 +1,7 @@
 
-import './Icon.scss?v=1.0.8';
+import './Icon.scss?v=1.0.9';
 
-import Image from 'next/image';
+//import Image from 'next/image';
 
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import FacebookIcon from '@mui/icons-material/Facebook';
@@ -25,8 +25,6 @@ import EngineeringIcon from '@mui/icons-material/Engineering';
 import CircleIcon from '@mui/icons-material/Circle';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 
-import Logo from '../../svgs/logo.svg';
-
 const map: any = {
 	'file': '/icons/file.svg',
 };
@@ -37,18 +35,18 @@ export default function Icon(attrs: any) {
 	if (map[src]) src = map[src];
 
 	return (
-		<i className={`icon ${attrs.className || ''}`.trim()} data-src={src}>
+		<i
+			className={`icon ${attrs.className || ''}`.trim()}
+			data-src={src}
+			style={{
+				display: 'inline-block',
+				...attrs.style,
+			}}
+		>
 			{
 				(() => {
 
-					if (src === 'logo') return <Image
-						src={Logo}
-						alt="Logo"
-						width={attrs.width || 25}
-						height={attrs.height || 25}
-					/>;
-
-					else if (src.includes('/')) return <Image
+					if (src.includes('/')) return <img
 						src={src}
 						alt={attrs.alt || 'Image'}
 						width={attrs.width || 25}

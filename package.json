@@ -23,6 +23,7 @@
 		"axios": "^1.8.4",
 		"bcrypt": "^6.0.0",
 		"clsx": "^2.1.1",
+		"giticon": "^1.0.8",
 		"js-cookie": "^3.0.5",
 		"jsonwebtoken": "^9.0.2",
 		"mongodb": "^6.16.0",

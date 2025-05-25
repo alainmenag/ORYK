@@ -37,6 +37,10 @@ header[data-open="true"] .nav-wrapper {
 	padding-top: 25px;
 }
 
+header .logo a {
+	display: flex;
+}
+
 header .logo .icon {
 	display: block;
 	width: 85px;
@@ -56,11 +60,29 @@ header[data-open="false"] .logo .icon {
 	margin-left: 15px;
 }
 
-header .logo img {
+header .logo img,
+header .logo svg {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
 	//overflow: visible;
+}
+
+header .avatar a {
+	display: flex;
+	border-radius: 100%;
+	overflow: hidden;
+}
+
+header .avatar a img {
+	height: 40px;
+	width: 40px;
+	background-color: #ffffff;
+}
+
+header .avatar a img[src*="/guest"] {
+	padding: 8px;
+	background-color: #f2f2f2;
 }
 
 header[data-open="true"] nav {

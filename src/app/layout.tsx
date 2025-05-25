@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 
 import { Providers } from './providers';
 
-import "./globals.scss?v=1.0.8";
+import "./globals.scss?v=1.0.9";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -50,9 +50,9 @@ export default async function RootLayout({
 			>
 				<Providers>{ children }</Providers>
 
-				<script src="/vendor/jquery-3.7.1.min.js?v=1.0.8" async></script>
-				<script src="/vendor/utterscroll-master/jquery-scrollable.js?v=1.0.8" async></script>
-				<script src="/vendor/utterscroll-master/debiki-utterscroll.js?v=1.0.8" async></script>
+				<script src="/vendor/jquery-3.7.1.min.js?v=1.0.9" async></script>
+				<script src="/vendor/utterscroll-master/jquery-scrollable.js?v=1.0.9" async></script>
+				<script src="/vendor/utterscroll-master/debiki-utterscroll.js?v=1.0.9" async></script>
 			</body>
 		</html>
 	);

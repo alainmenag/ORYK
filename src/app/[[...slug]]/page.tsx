@@ -155,7 +155,7 @@ export default async function Page(
 				`}
 			</style>
 
-			<Header session={ session } logo={provider.logo} links={links.nav} />
+			<Header session={ session } logo={ provider?.logo } links={links.nav} />
 
 			<main style={{
 				backgroundColor: '#ffffff',
@@ -175,7 +175,7 @@ export default async function Page(
 				})}
 			</main>
 
-			<Footer session={ session } logo={provider.logo} links={links.footer} />
+			<Footer session={ session } logo={ provider?.logo } links={links.footer} />
 
 		</>
 	);
