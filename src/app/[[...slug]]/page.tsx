@@ -3,9 +3,12 @@
 
 "use server"
 
+import { notFound } from 'next/navigation';
+import { headers } from 'next/headers';
+
 import Box from '@mui/material/Box';
 
-import { location } from '../location'
+import { location } from '../location';
 
 import Header from '../../components/Header/Header';
 import Hero from '../../components/Hero/Hero';
@@ -30,6 +33,13 @@ export async function generateMetadata(
 export default async function Page(
 	props: any
 ) {
+	const headersList = await headers();
+	const pathname = `${ headersList.get('x-pathname') }`;
+
+	const isValidImage = pathname.match(/\.(jpeg|jpg|gif|png|svg|webp)$/i);
+
+	if (isValidImage) return notFound();
+
 	const { provider, page, hostname, db } = await location({ props });
 
 	const links: any = {};
