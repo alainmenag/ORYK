@@ -3,17 +3,15 @@
 
 "use server"
 
-import { notFound } from 'next/navigation';
-import { headers } from 'next/headers';
-
 import Box from '@mui/material/Box';
 
-import { location } from '../location';
+import { getLocation } from '../location';
 
 import Header from '../../components/Header/Header';
 import Hero from '../../components/Hero/Hero';
 import Slideshow from '../../components/Slideshow/Slideshow';
 import Footer from '../../components/Footer/Footer';
+import Access from '../../components/Access/Access';
 
 //import FeatureCard from '../../components/FeatureCard';
 //import Card from '../../components/Card';
@@ -22,26 +20,25 @@ import Footer from '../../components/Footer/Footer';
 export async function generateMetadata(
 	props: any
 ) {
-	const loc: any = await location({ props });
+	const location: any = await getLocation({ props });
 
 	return {
-		title: loc.title,
-		description: loc.description,
+		title: location.title,
+		description: location.description,
 	};
 }
 
 export default async function Page(
 	props: any
 ) {
-	const headersList = await headers();
-	const pathname = `${ headersList.get('x-pathname') }`;
-
-	const isValidImage = pathname.match(/\.(jpeg|jpg|gif|png|svg|webp)$/i);
-
-	if (isValidImage) return notFound();
-
-	const { provider, page, hostname, db } = await location({ props });
-
+	const {
+		db,
+		provider,
+		page,
+		hostname,
+		session,
+	} = await getLocation({ props });
+	
 	const links: any = {};
 
 	// setup page
@@ -153,11 +150,12 @@ export default async function Page(
 						--color-secondary: ${provider.colors?.secondary};
 						--color-light: ${provider.colors?.light};
 						--color-dark: ${provider.colors?.dark};
+						--background: ${provider.colors?.background};
 					}
 				`}
 			</style>
 
-			<Header logo={provider.logo} links={links.nav} />
+			<Header session={ session } logo={provider.logo} links={links.nav} />
 
 			<main style={{
 				backgroundColor: '#ffffff',
@@ -169,14 +167,15 @@ export default async function Page(
 							backgroundColor: section?.background?.color || `rgba(0, 0, 0, ${$index * 0.1})`,
 							...(section?.style || {}),
 						}}>
-							{section.template === 'hero' ? <Hero {...section} /> : null}
-							{section.template === 'slideshow' ? <Slideshow {...section} /> : null}
+							{section.template === 'hero' ? <Hero session={ session } {...section} /> : null}
+							{section.template === 'slideshow' ? <Slideshow session={ session } {...section} /> : null}
+							{section.template === 'access' ? <Access session={ session } {...section} /> : null}
 						</Box>
 					);
 				})}
 			</main>
 
-			<Footer logo={provider.logo} links={links.footer} />
+			<Footer session={ session } logo={provider.logo} links={links.footer} />
 
 		</>
 	);

@@ -96,12 +96,25 @@ export default function Navigator(attrs: any)
 		>
 			<div className="inner-header-wrapper">
 				<div className="nav-wrapper">
+
 					<div className='logo'>
 						<Link href="/">
-							<Icon src={attrs.logo || 'logo'} />
+							<Icon src={ attrs.logo || 'logo' } />
 						</Link>
 					</div>
+
+					<div>
+						<Link href="/access">
+							<Icon
+								src={ `/api/access/avatar/${ attrs?.session?._id || 'guest' }` }
+								width={ 40 }
+								height={ 40 }
+							/>
+						</Link>
+					</div>
+
 					<Nav links={ attrs.links } />
+
 					<div className='button'>
 						<div className="menu-icon" onClick={ () =>
 						{
@@ -124,6 +137,7 @@ export default function Navigator(attrs: any)
 							<span></span>
 						</div>
 					</div>
+
 				</div>
 				<div>
 				</div>

@@ -27,22 +27,34 @@ import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 
 import Logo from '../../svgs/logo.svg';
 
-const map:any = {
+const map: any = {
 	'file': '/icons/file.svg',
 };
 
-export default function Icon(attrs: any)
-{
+export default function Icon(attrs: any) {
 	let src = attrs.src; if (!attrs.src) return null;
 
 	if (map[src]) src = map[src];
 
 	return (
-		<i className={`icon ${attrs.className || ''}`.trim()} data-src={ src }>
+		<i className={`icon ${attrs.className || ''}`.trim()} data-src={src}>
 			{
 				(() => {
-					if (src === 'logo') return <Image src={Logo} alt="Logo" width="25" height="25" />;
-					else if (src.includes('/')) return <Image src={src} alt={attrs.alt || 'Image'} width="25" height="25" />;
+
+					if (src === 'logo') return <Image
+						src={Logo}
+						alt="Logo"
+						width={attrs.width || 25}
+						height={attrs.height || 25}
+					/>;
+
+					else if (src.includes('/')) return <Image
+						src={src}
+						alt={attrs.alt || 'Image'}
+						width={attrs.width || 25}
+						height={attrs.height || 25}
+					/>;
+
 					else if (src === 'linkedin') return <LinkedInIcon />;
 					else if (src === 'facebook') return <FacebookIcon />;
 					else if (src === 'instagram') return <InstagramIcon />;
@@ -64,7 +76,9 @@ export default function Icon(attrs: any)
 					else if (src === 'keyboard-arrow-right') return <KeyboardArrowRightIcon />;
 					else if (src === 'arrow-drop-down') return <ArrowDropDownIcon />;
 					else if (src === 'circle') return <CircleIcon />;
+
 					else return <CircleIcon />;
+
 				})()
 			}
 		</i>
