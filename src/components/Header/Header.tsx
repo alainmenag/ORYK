@@ -3,7 +3,7 @@
 
 'use client';
 
-import './Header.scss?v=1.0.9';
+import './Header.scss?v=1.1.1';
 
 import Link from 'next/link';
 
@@ -16,7 +16,11 @@ export default function Navigator(attrs: any)
 {
 	const headerRef:any = useRef({});
 
-	const [ mobile, setMobile ] = useState({ open: false, top: 0 });
+	const [ mobile, setMobile ] = useState({
+		open: false,
+		//open: true,
+		top: 0,
+	});
 
 	useEffect(() =>
 	{
@@ -95,45 +99,45 @@ export default function Navigator(attrs: any)
 			ref={ headerRef }
 		>
 			<div className="inner-header-wrapper">
-				<div className="nav-wrapper">
+				<div className='nav-container'>
+					<div className="nav-wrapper">
 
-					<div className='logo'>
-						<Link href="/">
-							<Icon src={ attrs.logo || '/icons/oryk-logo.svg?v=1.0.9a' } />
-						</Link>
-					</div>
-
-					<div className='avatar'>
-						<Link href="/access">
-							<Icon
-								src={ `/api/access/avatar/${ attrs?.session?._id || 'guest' }?v=1.0.9a` }
-							/>
-						</Link>
-					</div>
-
-					<Nav links={ attrs.links } />
-
-					<div className='button'>
-						<div className="menu-icon" onClick={ () =>
-						{
-							const top = window.scrollY;
-							const open = !mobile.open;
-							const header = headerRef.current;
-							const scroll = header.getAttribute('data-top') || 0;
-
-							header.setAttribute('data-top', open ? top : 0);
-
-							setTimeout(() =>
-							{
-								window.scrollTo({ top: scroll });
-							});
-
-							setMobile({ ...mobile, open: open });
-						} }>
-							<span></span>
-							<span></span>
-							<span></span>
+						<div className='logo'>
+							<Link href="/" className='branding'>
+								<Icon src={ attrs.logo || '/icons/oryk-logo.svg?v=1.1.1' } />
+							</Link>
+							<Link href="/access" className='avatar'>
+								<Icon
+									src={ `/api/access/avatar/${ attrs?.session?._id || 'guest' }?v=1.1.1` }
+								/>
+							</Link>
 						</div>
+
+						<Nav links={ attrs.links } />
+
+						<div className='button'>
+							<div className="menu-icon" onClick={ () =>
+							{
+								const top = window.scrollY;
+								const open = !mobile.open;
+								const header = headerRef.current;
+								const scroll = header.getAttribute('data-top') || 0;
+
+								header.setAttribute('data-top', open ? top : 0);
+
+								setTimeout(() =>
+								{
+									window.scrollTo({ top: scroll });
+								});
+
+								setMobile({ ...mobile, open: open });
+							} }>
+								<span></span>
+								<span></span>
+								<span></span>
+							</div>
+						</div>
+
 					</div>
 
 				</div>

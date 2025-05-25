@@ -14,6 +14,20 @@ header[data-open="false"] .inner-header-wrapper {
 	align-items: center;
 }
 
+header .nav-container {
+	width: 100%;
+	max-width: 75vw;
+	background-color: rgba(255, 255, 255, 0.75);
+	backdrop-filter: blur(15px);
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+
+
+header[data-open="true"] .nav-container {
+	max-width: 100%;
+}
+
 header .nav-wrapper {
 	display: flex;
 	gap: 10px;
@@ -21,20 +35,25 @@ header .nav-wrapper {
 }
 
 header[data-open="false"] .nav-wrapper {
-	max-width: 75vw;
-	background-color: rgba(255, 255, 255, 0.75);
-	backdrop-filter: blur(15px);
-	border-top-right-radius: 5px;
-	border-bottom-right-radius: 5px;
 	justify-content: flex-end;
 	align-items: center;
 	padding-right: 15px;
+	margin-top: -10px;
+	margin-bottom: -10px;
 }
 
 header[data-open="true"] .nav-wrapper {
 	flex-wrap: wrap;
 	justify-content: space-around;
 	padding-top: 25px;
+}
+
+header .logo {
+	padding: 0 15px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
 }
 
 header .logo a {
@@ -45,19 +64,19 @@ header .logo .icon {
 	display: block;
 	width: 85px;
 	height: 85px;
-	min-width: 85px;
-	min-height: 85px;
 	border-radius: 100%;
-	background-color: #ccc;
 	margin: auto;
 	overflow: hidden;
-	// margin: -15px 0;
-	//margin-left: 15px;
+	background-color: #f2f2f2;
 }
 
-header[data-open="false"] .logo .icon {
-	margin: -15px 0;
-	margin-left: 15px;
+header .logo .branding .icon {
+	background-color: #ccc;
+}
+
+header .logo .avatar .icon {
+	width: 45px;
+	height: 45px;
 }
 
 header .logo img,
@@ -65,30 +84,18 @@ header .logo svg {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
-	//overflow: visible;
 }
 
-header .avatar a {
-	display: flex;
-	border-radius: 100%;
-	overflow: hidden;
-}
-
-header .avatar a img {
-	height: 40px;
-	width: 40px;
-	background-color: #ffffff;
-}
-
-header .avatar a img[src*="/guest"] {
+header .logo .avatar .icon img[src*="/guest"] {
 	padding: 8px;
-	background-color: #f2f2f2;
+	object-fit: contain;
 }
 
 header[data-open="true"] nav {
 	order: 3;
 	width: 100%;
 	padding: 45px;
+	padding-top: 15px;
 }
 
 header[data-open="false"] nav a {
@@ -189,7 +196,7 @@ header .menu-icon span:last-of-type {
 header[data-open="true"] .logo,
 header[data-open="true"] .button {
 	flex: 1 1 calc(50vw - 5px);
-	justify-content: space-around;
+	justify-content: center;
 	display: flex;
 }
 

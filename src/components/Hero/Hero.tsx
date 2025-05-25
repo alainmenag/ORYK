@@ -1,5 +1,5 @@
 
-import './Hero.scss?v=1.0.9';
+import './Hero.scss?v=1.1.1';
 
 import Elements from '../Elements/Elements';
 
