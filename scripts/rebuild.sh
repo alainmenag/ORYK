@@ -4,7 +4,7 @@ if [ -f .env ]; then
   export $(echo $(cat .env | sed 's/#.*//g'| xargs) | envsubst)
 fi
 
-rm -rf .next
+#rm -rf .next
 
 npm run build
 
