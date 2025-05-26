@@ -3,7 +3,7 @@
 
 'use client';
 
-import './Header.scss?v=1.1.1';
+import './Header.scss?v=1.1.2';
 
 import Link from 'next/link';
 
@@ -104,11 +104,11 @@ export default function Navigator(attrs: any)
 
 						<div className='logo'>
 							<Link href="/" className='branding'>
-								<Icon src={ attrs.logo || '/icons/oryk-logo.svg?v=1.1.1' } />
+								<Icon src={ attrs.logo || '/icons/oryk-logo.svg?v=1.1.2' } />
 							</Link>
 							<Link href="/access" className='avatar'>
 								<Icon
-									src={ `/api/access/avatar/${ attrs?.session?._id || 'guest' }?v=1.1.1` }
+									src={ `/api/access/avatar/${ attrs?.session?._id || 'guest' }?v=1.1.2` }
 								/>
 							</Link>
 						</div>

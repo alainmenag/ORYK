@@ -3,7 +3,7 @@
 
 'use client';
 
-import './Footer.scss?v=1.1.1';
+import './Footer.scss?v=1.1.2';
 
 import Link from 'next/link';
 
@@ -27,7 +27,7 @@ export default function Footer(attrs: any)
 					<div className={ attrs?.links.length ? 'side right' : 'side full' }>
 						<Link href="/">
 							<Icon
-								src={ attrs.logo || '/icons/oryk-logo.svg?v=1.1.1' }
+								src={ attrs.logo || '/icons/oryk-logo.svg?v=1.1.2' }
 								className="logo"
 							/>
 						</Link>

@@ -1,5 +1,5 @@
 
-import './Slideshow.scss?v=1.1.1';
+import './Slideshow.scss?v=1.1.2';
 
 import Elements from '../Elements/Elements';
 
