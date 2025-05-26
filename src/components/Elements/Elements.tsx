@@ -11,6 +11,8 @@ export default async function Card(attrs: any) {
 		<>
 			{Object.keys(attrs).map((attr, $index) => {
 
+				console.log(attr, attrs[attr]);
+
 				if (attr === 'list') {
 					return (
 						<ul key={$index} className='list'>
@@ -27,8 +29,6 @@ export default async function Card(attrs: any) {
 				}
 
 				else if (attr === 'actions' && attrs[attr]) {
-
-					console.log(attrs[attr]);
 
 					return (
 						<div key={$index} className='actions'>
@@ -76,11 +76,13 @@ export default async function Card(attrs: any) {
 					);
 				}
 
+				/*
 				else if (typeof attrs[attr] === 'object' && attrs[attr] !== null) {
 					return (
 						<Text key={$index} className={`${attr}`} {...attrs}>{JSON.stringify(attrs[attr])}</Text>
 					);
 				}
+				*/
 
 				else if (typeof attrs[attr] === 'string') {
 					return (
