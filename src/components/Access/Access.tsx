@@ -69,6 +69,7 @@ export default function Access(attrs: any)
 			...res,
 		});
 
+		if (res.accessToken && attrs.redirect) return router.push(attrs.redirect);
 		if (res.redirect) router.push('/');
 	};
 

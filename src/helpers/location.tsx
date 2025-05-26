@@ -6,19 +6,6 @@ import { headers, cookies } from 'next/headers';
 
 const pages:any = {};
 
-pages['/404'] = {
-	title: `404`,
-	description: 'Page Not Found',
-	sections: [{
-		template: 'hero',
-		title: 'Page Not Found',
-		description: 'The page you are looking for does not exist.',
-		style: {
-			textAlign: 'center',
-		}
-	}]
-};
-
 pages['/access'] = {
 	title: 'Access',
 	description: 'Access',
@@ -27,7 +14,7 @@ pages['/access'] = {
 	}]
 };
 
-pages['/provider'] = {
+pages['/site/provider/404'] = {
 	title: 'Provider',
 	description: 'Provider',
 	sections: [{
@@ -36,7 +23,24 @@ pages['/provider'] = {
 		description: 'There is no provider registered for this hostname.',
 		style: {
 			textAlign: 'center',
-			//backgroundColor: 'red',
+		},
+		actions: [{
+			label: 'Site Setup',
+			href: '/site',
+			//href: `/access?redirect=${ encodeURIComponent('/site/provider') }`,
+		}]
+	}]
+};
+
+pages['/site/page/404'] = {
+	title: `404`,
+	description: 'Page Not Found',
+	sections: [{
+		template: 'hero',
+		title: 'Page Not Found',
+		description: 'The page you are looking for does not exist.',
+		style: {
+			textAlign: 'center',
 		}
 	}]
 };
@@ -90,10 +94,10 @@ export async function getMeta({ props }: any)
 	}) || {};
 
 	// force provider page if no provider or page matched
-	if (!page.title && !provider._id) page = pages['/provider'];
+	if (!page.title && !provider._id) page = pages['/site/provider/404'];
 
 	// force NOT FOUND if no page matched
-	if (!page.title && !page._id) page = pages['/404'];
+	if (!page.title && !page._id) page = pages['/site/page/404'];
 
 	page.title = page?.title || 'Page';
 	page.sections = page.sections || [];

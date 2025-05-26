@@ -5,7 +5,7 @@
 
 import Box from '@mui/material/Box';
 
-import { getMeta, getLocation } from '../location';
+import { getMeta, getLocation } from '../../helpers/location';
 
 import Header from '../../components/Header/Header';
 import Hero from '../../components/Hero/Hero';
@@ -36,11 +36,13 @@ export default async function Page(
 		page,
 		session,
 		links,
+		query,
 	} = await getLocation({ props });
 
 	//console.log('provider', provider);
 	//console.log('page', page);
 	//console.log('links', links);
+	//console.log('query', query);
 
 	return (
 		<>
@@ -57,27 +59,54 @@ export default async function Page(
 				`}
 			</style>
 
-			<Header session={ session } logo={ provider?.logo } links={links.nav} />
+			<Header
+				session={session}
+				logo={provider?.logo}
+				links={links.nav}
+			/>
 
 			<main style={{
 				backgroundColor: '#ffffff',
 			}}>
 				{page?.sections?.map((section: any, $index: any) => {
 					return (
-						<Box component="section" key={$index} className="section" style={{
-							width: '100%',
-							backgroundColor: section?.background?.color || `rgba(0, 0, 0, ${$index * 0.1})`,
-							...(section?.style || {}),
-						}}>
-							{section.template === 'hero' ? <Hero session={ session } {...section} /> : null}
-							{section.template === 'slideshow' ? <Slideshow session={ session } {...section} /> : null}
-							{section.template === 'access' ? <Access session={ session } {...section} /> : null}
+						<Box
+							component="section"
+							key={$index}
+							className="section"
+							style={{
+								width: '100%',
+								backgroundColor: section?.background?.color || `rgba(0, 0, 0, ${$index * 0.1})`,
+								...(section?.style || {}),
+							}}
+						>
+
+							{section.template === 'hero' ? <Hero
+								session={session}
+								{...section}
+							/> : null}
+
+							{section.template === 'slideshow' ? <Slideshow
+								session={session}
+								{...section}
+							/> : null}
+
+							{section.template === 'access' ? <Access
+								session={session}
+								redirect={query.redirect}
+								{...section}
+							/> : null}
+
 						</Box>
 					);
 				})}
 			</main>
 
-			<Footer session={ session } logo={ provider?.logo } links={links.footer} />
+			<Footer
+				session={session}
+				logo={provider?.logo}
+				links={links.footer}
+			/>
 
 		</>
 	);

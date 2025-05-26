@@ -1,9 +1,11 @@
 
 import { Geist, Geist_Mono } from "next/font/google";
 
-import { Providers } from './providers';
+import Script from "next/script";
 
-import "./globals.scss?v=1.1.2";
+import { Providers } from '../helpers/providers';
+
+import "../styles/globals.scss";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -28,7 +30,6 @@ export default async function RootLayout({
 			<head>
 
 				<link rel="icon" href="/favicon.ico" />
-				<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 				<link rel="manifest" href="/site.webmanifest" />
 
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -48,11 +49,24 @@ export default async function RootLayout({
 			<body
 				className={ `${ geistSans.variable } ${ geistMono.variable } antialiased` }
 			>
+				
 				<Providers>{ children }</Providers>
 
-				<script src="/vendor/jquery-3.7.1.min.js?v=1.1.2" async></script>
-				<script src="/vendor/utterscroll-master/jquery-scrollable.js?v=1.1.2" async></script>
-				<script src="/vendor/utterscroll-master/debiki-utterscroll.js?v=1.1.2" async></script>
+				<Script
+					src="/vendor/jquery-3.7.1.min.js?v=1.1.2"
+					strategy="afterInteractive"
+				/>
+
+				<Script
+					src="/vendor/utterscroll-master/jquery-scrollable.js?v=1.1.2"
+					strategy="afterInteractive"
+				/>
+
+				<Script
+					src="/vendor/utterscroll-master/debiki-utterscroll.js?v=1.1.2"
+					strategy="afterInteractive"
+				/>
+
 			</body>
 		</html>
 	);
