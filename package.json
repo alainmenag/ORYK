@@ -3,11 +3,11 @@
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {
-		"dev": "chmod 777 ./server.development.sh && ./server.development.sh",
-		"start": "chmod 777 ./server.production.sh && ./server.production.sh",
-		"update": "chmod 777 ./server.production.sh && ./server.update.sh",
+		"dev": "chmod 777 ./scripts/start.development.sh && ./scripts/start.development.sh",
+		"start": "chmod 777 ./scripts/start.production.sh && ./scripts/start.production.sh",
+		"update": "chmod 777 ./scripts/update.sh && ./scripts/update.sh",
+		"rebuild": "chmod 777 ./scripts/rebuild.sh && ./scripts/rebuild.sh",
 		"build": "next build",
-		"rebuild": "rm -rf .next && next build",
 		"lint": "next lint"
 	},
 	"dependencies": {
