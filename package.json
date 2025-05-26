@@ -5,6 +5,7 @@
 	"scripts": {
 		"dev": "chmod 777 ./server.development.sh && ./server.development.sh",
 		"start": "chmod 777 ./server.production.sh && ./server.production.sh",
+		"update": "chmod 777 ./server.production.sh && ./server.update.sh",
 		"build": "next build",
 		"rebuild": "rm -rf .next && next build",
 		"lint": "next lint"

@@ -24,7 +24,7 @@ module.exports = {
 			name: "oryk.com",
 			script: "npm",
 			args: "start", // Run the start script from package.json
-			cwd: "/opt/oryk", // Set to your project directory
+			//cwd: "/opt/oryk", // Set to your project directory
 			env: {
 				NODE_ENV: "production",
 			},
