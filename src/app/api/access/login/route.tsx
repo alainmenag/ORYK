@@ -30,7 +30,7 @@ export async function POST(request: Request)
 		...(
 			session._id
 			? { _id: new ObjectId(session._id) }
-			: { owner: body.username }
+			: { username: body.username }
 		)
 	}, {
 		$set: {
@@ -40,7 +40,7 @@ export async function POST(request: Request)
 			created: new Date(),
 			updated: new Date(),
 			category: 'users',
-			owner: body.username,
+			username: body.username,
 			email: body.email,
 			password: await bcrypt.hash(body.password, 10),
 		},
