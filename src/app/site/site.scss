@@ -1,0 +1,21 @@
+
+#navigator nav {
+	width: 100%;
+}
+
+#navigator nav li ul {
+	padding-left: 15px;
+}
+
+#navigator nav a {
+	padding: 10px 15px;
+	display: flex;
+}
+
+#navigator nav li a.ancestor,
+#navigator nav li a.active,
+#navigator nav li .ancestor a {
+	font-weight: bold;
+	background-color: #000;
+	color: #fff;
+}

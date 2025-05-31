@@ -26,7 +26,7 @@ pages['/site/provider/404'] = {
 		},
 		actions: [{
 			label: 'Site Setup',
-			href: '/site',
+			href: '/site/setup',
 			//href: `/access?redirect=${ encodeURIComponent('/site/provider') }`,
 		}]
 	}]

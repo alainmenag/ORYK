@@ -2,6 +2,16 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
 
+	turbopack: {
+		// ...
+		resolveExtensions: ['.mdx', '.tsx', '.ts', '.jsx', '.js', '.mjs', '.json'],
+	   },
+
+	// Enable Turbopack
+	// experimental: {
+	// 	turbopack: true,
+	// },
+
 	allowedDevOrigins: [
 		'127.0.0.1',
 		'localhost',
@@ -12,6 +22,7 @@ const nextConfig: NextConfig = {
 		'www.oryk.com',
 	],
 
+	// Uncomment if you need rewrites
 	// async rewrites() {
 	// 	return [
 	// 	  {
@@ -23,9 +34,10 @@ const nextConfig: NextConfig = {
 	// 	    destination: '/public/audio/:slug*', // Serve audio from the public folder
 	// 	  },
 	// 	];
-	//    },
+	// },
 
 	webpack(config) {
+		// Custom Webpack configuration for .svg files
 		config.module.rules.push({
 			test: /\.svg$/,
 			use: ['@svgr/webpack'],

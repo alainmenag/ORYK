@@ -5,6 +5,16 @@ import Script from "next/script";
 
 import { Providers } from '../helpers/providers';
 
+// import 'primereact/resources/primereact.min.css';
+// import "primereact/resources/themes/lara-light-cyan/theme.css";
+
+import 'primereact/resources/primereact.min.css'; // for PrimeReact core styles
+import 'primereact/resources/themes/lara-light-indigo/theme.css'; // for theme
+import 'primeicons/primeicons.css'; // for PrimeIcons (if you need icons)
+
+//import 'ag-grid-community/styles/ag-grid.css'; // Import ag-Grid styles
+import 'ag-grid-community/styles/ag-theme-alpine.css'; // Import theme styles
+
 import "../styles/globals.scss";
 
 const geistSans = Geist({
@@ -41,6 +51,10 @@ export default async function RootLayout({
 							--desktop: 1024px;
 							--tablet: 768px;
 							--mobile: 480px;
+						}
+
+						.loading {
+							visibility: hidden;
 						}
 					`}
 				</style>

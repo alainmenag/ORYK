@@ -23,7 +23,7 @@ function renderLinks(links: any[], pathname: string, level: number): React.React
 
 		return (
 			<li
-				key={link._id}
+				key={link._id || `${link.slug}-${level}`}
 				data-level={ level || 0 }
 				className={`${ className }`}
 			>
@@ -49,6 +49,7 @@ function renderLinks(links: any[], pathname: string, level: number): React.React
 	});
 }
 
+/*
 function buildTreeFromSlugs(items: any[]): any[]
 {
 	const root: any[] = [];
@@ -83,6 +84,39 @@ function buildTreeFromSlugs(items: any[]): any[]
 	}
 
 	return root;
+}
+	*/
+
+function buildTreeFromSlugs(items: any[]): any[] {
+    const root: any[] = [];
+    const map = new Map<string, any>();
+
+    // First, map all items
+    for (const item of items) {
+        map.set(item.slug, { ...item, children: [] });
+    }
+
+    for (const item of items) {
+        const segments = item.slug.split('/').filter(Boolean);
+
+        if (!segments.length || segments.length === 1) {
+            // Top-level or root items with no parent
+            root.push(map.get(item.slug)!);
+        } else {
+            // Remove last segment to get parent slug
+            const parentSlug = '/' + segments.slice(0, -1).join('/');
+            const parent = map.get(parentSlug);
+            
+            if (parent) {
+                parent.children?.push(map.get(item.slug)!);
+            } else {
+                // If no parent found, set the item as its own parent
+                root.push(map.get(item.slug)!);
+            }
+        }
+    }
+
+    return root;
 }
 
 function deepSanitize(links: any[]): any[]
