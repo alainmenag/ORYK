@@ -1,7 +1,11 @@
 
+"use client";
+
+import Link from 'next/link';
+
 import Table from '../../../components/Table/Table';
 
-export default async function Page() {
+export default function Page() {
 	return (
 		<div>
 			<Table src="/api/data/users" columns={[
@@ -9,7 +13,12 @@ export default async function Page() {
 					field: "username",
 					sortable: true,
 					filter: true,
-				}
+					cellRenderer: (params: any) => {
+						if (!params?.data?._id) return null;
+
+						return <Link href={`/site/users/${ params.data._id }`}>{ params.value }</Link>;
+					},
+				},
 			]} />
 		</div>
 	);
