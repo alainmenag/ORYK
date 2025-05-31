@@ -1,12 +1,16 @@
 
-export default async function Page(
-	//props: any
-) {
+import Table from '../../../components/Table/Table';
+
+export default async function Page() {
 	return (
 		<div>
-
-			variables...
-
+			<Table src="/api/data/variables" columns={[
+				{
+					field: "name",
+					sortable: true,
+					filter: true,
+				}
+			]} />
 		</div>
 	);
 }

@@ -18,32 +18,25 @@ pages['/site'] = {
 	slug: '/site',
 };
 
-/*
-{
-	title: 'Site',
-	slug: '/site',
-},
-{
+pages['/site/users'] = {
 	title: 'Users',
 	slug: '/site/users',
-},
-{
-	title: 'Roster',
-	slug: '/site/users/roster',
-},
-{
+};
+
+pages['/site/pages'] = {
 	title: 'Pages',
 	slug: '/site/pages',
-},
-{
+};
+
+pages['/site/sections'] = {
 	title: 'Sections',
 	slug: '/site/sections',
-},
-{
+};
+
+pages['/site/variables'] = {
 	title: 'Variables',
 	slug: '/site/variables',
-},
-*/
+};
 
 export default function SiteLayout({ children }: { children: React.ReactNode })
 {

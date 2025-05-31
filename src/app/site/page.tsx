@@ -7,9 +7,9 @@ import { getLocation } from '../../helpers/location';
 
 import PageSession from './page.session';
 import PageOwner from './page.owner';
-import PageMetadata from './page.metadata';
-import PageSecurity from './page.security';
-import PageEnvironment from './page.environment';
+// import PageMetadata from './page.metadata';
+// import PageSecurity from './page.security';
+// import PageEnvironment from './page.environment';
 
 export default async function Page(
 	props: any
@@ -33,6 +33,7 @@ export default async function Page(
 				<PageOwner hostname={hostname} owner={provider.owners ?provider.owners.join(', ') : null} />
 			</Panel>
 
+			{/*
 			<Panel header="Metadata">
 				<PageMetadata />
 			</Panel>
@@ -44,6 +45,7 @@ export default async function Page(
 			<Panel header="Environment">
 				<PageEnvironment />
 			</Panel>
+			*/}
 
 		</div>
 	)

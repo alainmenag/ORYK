@@ -21,6 +21,7 @@
 		"@mui/material": "^7.0.2",
 		"@mui/styled-engine-sc": "^7.0.2",
 		"ag-grid-community": "^33.3.1",
+		"ag-grid-enterprise": "^33.3.1",
 		"ag-grid-react": "^33.3.1",
 		"avatar-builder": "^1.0.2",
 		"axios": "^1.8.4",
