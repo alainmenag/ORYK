@@ -21,9 +21,9 @@ export default function Page(
 ) {
 	// Row Data: The data to be displayed.
 	const [
-			rowData
-			//, setRowData
-		] = useState([
+		rowData
+		//, setRowData
+	] = useState([
 		{ _id: "xyz", username: "user1" },
 	]);
 
@@ -31,12 +31,12 @@ export default function Page(
 	const [
 		colDefs
 		//, setColDefs
-	]:any = useState([
+	]: any = useState([
 		{ field: "_id" },
 		{ field: "username" },
 	]);
 
-	const rowSelection:any = useMemo(() => {
+	const rowSelection: any = useMemo(() => {
 		return {
 			mode: 'multiRow'
 		};

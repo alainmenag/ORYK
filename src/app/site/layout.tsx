@@ -1,25 +1,53 @@
 
-'use client';
-
-import { useEffect, useState } from 'react';
 import React from 'react';
+import { Splitter, SplitterPanel } from 'primereact/splitter';
 
 import './site.scss?v=1.1.2';
 
 import Nav from '../../components/Nav/Nav';
 
-import { Splitter, SplitterPanel } from 'primereact/splitter';
+const pages:any = {};
+
+pages['/'] = {
+	title: 'Home',
+	slug: '/',
+};
+
+pages['/site'] = {
+	title: 'Site',
+	slug: '/site',
+};
+
+/*
+{
+	title: 'Site',
+	slug: '/site',
+},
+{
+	title: 'Users',
+	slug: '/site/users',
+},
+{
+	title: 'Roster',
+	slug: '/site/users/roster',
+},
+{
+	title: 'Pages',
+	slug: '/site/pages',
+},
+{
+	title: 'Sections',
+	slug: '/site/sections',
+},
+{
+	title: 'Variables',
+	slug: '/site/variables',
+},
+*/
 
 export default function SiteLayout({ children }: { children: React.ReactNode })
 {
-	const [isLoaded, setIsLoaded] = useState(false);
-
-	useEffect(() => {
-	// Assuming the component is now rendered
-		setIsLoaded(true);
-	}, []);
-
-	return <div id="site" className={isLoaded ? '' : 'loading'} style={{
+	return <div id="site" style={{
 		backgroundColor: '#f2f2f2',
 	}}>
 
@@ -35,40 +63,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode })
 				minSize={15}
 			>
 				<Nav links={ [
-					{
-						title: 'Home',
-						slug: '/',
-					},
-					/*
-					{
-						title: 'Site',
-						slug: '/site',
-					},
-					{
-						title: 'Users',
-						slug: '/site/users',
-					},
-					{
-						title: 'Roster',
-						slug: '/site/users/roster',
-					},
-					{
-						title: 'Pages',
-						slug: '/site/pages',
-					},
-					{
-						title: 'Sections',
-						slug: '/site/sections',
-					},
-					{
-						title: 'Variables',
-						slug: '/site/variables',
-					},
-					*/
-					{
-						title: 'Setup',
-						slug: '/site/setup',
-					},
+					...Object.values(pages),
 				] } />
 			</SplitterPanel>
 

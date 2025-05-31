@@ -25,8 +25,8 @@ pages['/site/provider/404'] = {
 			textAlign: 'center',
 		},
 		actions: [{
-			label: 'Site Setup',
-			href: '/site/setup',
+			label: 'Site Settings',
+			href: '/site',
 			//href: `/access?redirect=${ encodeURIComponent('/site/provider') }`,
 		}]
 	}]
@@ -65,15 +65,22 @@ export async function getSession()
 	return session;
 }
 
-export async function getMeta({ props }: any)
+export async function getDb({
+	//props
+}: any)
 {
-	const params = await props.params;
-	const query = await props.searchParams;
 	const client = await clientPromise;
 
-	const headersList = await headers();
+	return client.db('oryk');
+}
 
-	const db = client.db('oryk');
+export async function getMeta({ props }: any)
+{
+	const params = props?.params ? await props.params : {};
+	const query = props?.searchParams ? await props.searchParams : {};
+
+	const headersList = await headers();
+	const db = await getDb({ props });
 
 	const hostname = process.env.HOSTNAME || headersList.get('host');
 	const pathname = `${ headersList.get('x-pathname') }`;

@@ -17,6 +17,8 @@ import 'ag-grid-community/styles/ag-theme-alpine.css'; // Import theme styles
 
 import "../styles/globals.scss";
 
+import Style from '../components/Style/Style';
+
 const geistSans = Geist({
 	variable: "--font-geist-sans",
 	subsets: ["latin"],
@@ -32,10 +34,12 @@ export default async function RootLayout({
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
+	//console.log('RootLayout');
 
 	return (
 		<html lang="en" style={{
 			backgroundColor: '#000000',
+			visibility: 'hidden', // hide until fonts are loaded
 		}}>
 			<head>
 
@@ -58,6 +62,8 @@ export default async function RootLayout({
 						}
 					`}
 				</style>
+
+				<Style />
 
 			</head>
 			<body

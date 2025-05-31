@@ -11,7 +11,7 @@ export default async function Card(attrs: any) {
 		<>
 			{Object.keys(attrs).map((attr, $index) => {
 
-				console.log(attr, attrs[attr]);
+				//console.log(attr, attrs[attr]);
 
 				if (attr === 'list') {
 					return (
