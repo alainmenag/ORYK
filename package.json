@@ -20,6 +20,8 @@
 		"@mui/icons-material": "^7.0.2",
 		"@mui/material": "^7.0.2",
 		"@mui/styled-engine-sc": "^7.0.2",
+		"@mui/x-data-grid": "^8.5.1",
+		"@mui/x-data-grid-generator": "^8.5.0",
 		"ag-grid-community": "^33.3.1",
 		"ag-grid-enterprise": "^33.3.1",
 		"ag-grid-react": "^33.3.1",
@@ -43,6 +45,7 @@
 		"react-scale-text": "^1.2.2",
 		"sass": "^1.89.0",
 		"styled-components": "^6.1.17",
+		"use-debounce": "^10.0.4",
 		"uuid": "^11.1.0"
 	},
 	"devDependencies": {

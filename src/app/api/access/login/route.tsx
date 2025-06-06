@@ -6,6 +6,8 @@ import jwt from 'jsonwebtoken';
 
 import { ObjectId } from 'mongodb';
 
+import { getMeta } from '../../../../helpers/location';
+
 export async function GET()
 {
 	return new Response(null, { status: 401 });
@@ -13,6 +15,9 @@ export async function GET()
 
 export async function POST(request: Request)
 {
+
+	const { hostname } = await getMeta({});
+
 	const client = await clientPromise;
 	const db = client.db('oryk');
 	const body = await request.json(); // Parse JSON body
@@ -35,6 +40,9 @@ export async function POST(request: Request)
 	}, {
 		$set: {
 			touched: new Date(),
+		},
+		$addToSet: {
+			hosts: hostname,
 		},
 		$setOnInsert: {
 			created: new Date(),

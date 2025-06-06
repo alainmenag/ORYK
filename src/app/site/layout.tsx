@@ -64,6 +64,9 @@ export default function SiteLayout({ children }: { children: React.ReactNode })
 				className="flex align-items-center justify-content-center"
 				size={75}
 				minSize={50}
+				style={{
+					overflowY: 'auto',
+				}}
 			>
 				<div style={{
 					width: '100%',

@@ -1,16 +1,38 @@
 
+"use client";
+
 import Table from '../../../components/Table/Table';
 
-export default async function Page() {
+export default function Page() {
 	return (
 		<div>
-			<Table src="/api/data/sections" columns={[
-				{
-					field: "title",
-					sortable: true,
-					filter: true,
-				}
-			]} />
+			<Table
+				title="Sections"
+				src="/api/data/sections/search"
+				columns={[
+					{
+						field: '_id',
+						headerName: 'ID',
+						minWidth: 240,
+						visible: false,
+						valueFormatter: (value:any) =>
+						{
+							return `${value}`;
+						}
+					},
+					{
+						field: 'title',
+						headerName: 'Title',
+						valueFormatter: (value:any) =>
+						{
+							return `${value}`;
+						}
+					},
+				]}
+				links={{
+					'add': '/site/sections/_',
+				}}
+			/>
 		</div>
 	);
 }
