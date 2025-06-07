@@ -10,9 +10,9 @@ export default async function Page({ params }: any)
 	return (
 		<div>
 			<Form
-				leave="/site/pages"
-				src={`/api/data/pages/view/${_id}`}
-				action={`/api/data/pages/modify/${_id}`}
+				leave="/site/providers"
+				src={`/api/data/providers/view/${_id}`}
+				action={`/api/data/providers/modify/${_id}`}
 				fieldsets={[
 					{
 						id: 'main',
@@ -22,7 +22,7 @@ export default async function Page({ params }: any)
 								label: 'Title',
 								type: 'text',
 								required: true,
-								help: 'Ex: My Page',
+								help: 'Ex: Hotel California',
 							},
 							{
 								id: 'slug',
@@ -30,7 +30,7 @@ export default async function Page({ params }: any)
 								type: 'text',
 								required: true,
 								regex: '^/.*$',
-								help: 'Ex: /path/to/page',
+								help: 'Ex: /provider',
 							},
 						],
 					},

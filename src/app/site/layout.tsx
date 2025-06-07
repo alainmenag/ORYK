@@ -18,6 +18,11 @@ pages['/site'] = {
 	slug: '/site',
 };
 
+pages['/site/providers'] = {
+	title: 'Providers',
+	slug: '/site/providers',
+};
+
 pages['/site/users'] = {
 	title: 'Users',
 	slug: '/site/users',

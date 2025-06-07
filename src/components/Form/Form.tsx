@@ -3,13 +3,18 @@
 import './Form.scss?v=1.1.4';
 
 import Alert from '@mui/material/Alert';
-
 import Elements from '../Elements/Elements';
+import Button from '@mui/material/Button';
+
+import IconButton from '@mui/material/IconButton';
+import Badge from '@mui/material/Badge';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import CheckIcon from '@mui/icons-material/Check';
+
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-export default function Form(props: any)
-{
+export default function Form(props: any) {
 	const router = useRouter();
 
 	const fieldsets = props.fieldsets || [];
@@ -26,13 +31,12 @@ export default function Form(props: any)
 		},
 	});
 
-	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) =>
-	{
+	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		if (event.preventDefault) event.preventDefault();
 
 		if (!props.action) return;
 
-		const nativeEvent:any = event.nativeEvent;
+		const nativeEvent: any = event.nativeEvent;
 		const method = nativeEvent?.submitter?.value === 'delete' ? 'DELETE' : 'POST';
 
 		let changed = null;
@@ -42,34 +46,36 @@ export default function Form(props: any)
 		const cs: any = state.changes || {};
 		//const cs: any = state.dataset || {}; // force entire dataset to be submitted
 
-		for (const key in cs)
-		{
-			changed = Date.now();
-			
-			dataset[key] = ds[key];
+		for (const key in cs) {
+			changed = Date.now(); dataset[key] = ds[key];
 		}
 
 		if (method === 'POST' && !changed) return setState({ ...state, error: 'No changes to submit.' });
 
 		setState({ ...state, loading: true, error: '' });
 
-		const res:any = await fetch(props.action, {
+		const res: any = await fetch(props.action, {
 			method: method,
 			headers: {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify(dataset),
-		}).then(async (response) =>
-		{
-			if (response.redirected) return {redirect: response.url};
+		}).then(async (response) => {
+			if (response.redirected) return { redirect: response.url };
 
-			if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+			const body = await response.text();
 
-			const json = await response.json();
+			if (!response.ok) throw new Error(body || `HTTP error! status: ${response.status}`);
 
-			return { error: '', changes: {}, dataset: json.doc || {}, access: json.access || {} };
-		}).catch((error) =>
-		{
+			const json = JSON.parse(body);
+
+			return {
+				error: '',
+				changes: {},
+				dataset: json.doc || {},
+				access: json.access || {}
+			};
+		}).catch((error) => {
 			return { error: error.message };
 		});
 
@@ -82,12 +88,10 @@ export default function Form(props: any)
 		});
 	};
 
-	const loadData = async (src: any) =>
-	{
+	const loadData = async (src: any) => {
 		setState({ ...state, loading: true, error: '', changes: {} });
 
-		const res = await fetch(src).then(async (response) =>
-		{
+		const res = await fetch(src).then(async (response) => {
 			if (!response.ok) {
 				throw new Error(`HTTP error! status: ${response.status}`);
 			}
@@ -95,8 +99,7 @@ export default function Form(props: any)
 			const json = await response.json();
 
 			return { error: null, dataset: json.doc || {}, access: json.access || {} };
-		}).catch((error) =>
-		{
+		}).catch((error) => {
 			return { error: error.message };
 		});
 
@@ -109,10 +112,8 @@ export default function Form(props: any)
 		});
 	};
 
-	const handleReset = (event: React.FormEvent<HTMLFormElement>) =>
-	{
-		if (props.src)
-		{
+	const handleReset = (event: React.FormEvent<HTMLFormElement>) => {
+		if (props.src) {
 			event.preventDefault();
 
 			loadData(props.src);
@@ -123,41 +124,68 @@ export default function Form(props: any)
 		if (props.src) loadData(props.src);
 	}, []);
 
+	const ds: any = state.dataset || {};
+
 	return (
 		<form
 			className='form'
-			onSubmit={ handleSubmit }
-			onReset={ handleReset }
+			onSubmit={handleSubmit}
+			onReset={handleReset}
 		>
 
-			{ state.error ? (
+			<nav>
+				{props.leave ? (
+					<div className="side left">
+						<div>
+							<IconButton onClick={() => router.push(props.leave)} title="Leave">
+								<Badge color="secondary">
+									<ExitToAppIcon />
+								</Badge>
+							</IconButton>
+						</div>
+						<div className="title">{ds?.title || ds?._id || `New`}</div>
+					</div>
+				) : null}
+
+				<div className="side right"></div>
+
+			</nav>
+
+
+			{state.error ? (
 				<div>
 					<Alert
 						severity="error"
-						//action={ <Button color="inherit" size="small">RETRY</Button> }
-						onClick={ () => loadData(props.src) }
-					>{ state.error }</Alert>
+						action={ <Button
+							color="inherit"
+							size="small"
+							title="Dismiss"
+							onClick={() => setState({ ...state, error: '' })}
+						>
+							<CheckIcon />
+						</Button> }
+					>{state.error}</Alert>
 				</div>
-			) : null }
+			) : null}
 
-			{ fieldsets.map((fieldset: any, i: any) => (
+			{fieldsets.map((fieldset: any, i: any) => (
 				<fieldset key={i}>
 					{fieldset.label ? (
 						<legend>{fieldset.label}</legend>
 					) : null}
 					<Elements
 						loading={state.loading}
-						data={state.dataset}
+						data={ds}
 						changes={state.changes}
 						readOnly={!state.access.write}
 					>{fieldset.fields}</Elements>
 				</fieldset>
-			)) }
+			))}
 
 			<fieldset>
 				<Elements
 					loading={state.loading}
-					data={state.dataset}
+					data={ds}
 					changes={state.changes}
 				>{[
 
@@ -177,8 +205,7 @@ export default function Form(props: any)
 							id: 'delete',
 							color: 'error',
 							confirm: true,
-							onClick: (event:any) =>
-							{
+							onClick: (event: any) => {
 								handleSubmit({
 									...event,
 									nativeEvent: {

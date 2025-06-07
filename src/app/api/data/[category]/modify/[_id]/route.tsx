@@ -1,7 +1,14 @@
 
-import { getMeta } from '../../../../../../helpers/location';
+import {
+	getMeta,
+	//getSession,
+} from '../../../../../../helpers/location';
 
 import { ObjectId } from 'mongodb';
+
+const messages:any = {
+	'DuplicateKey': 'A document with that key already exists.',
+};
 
 export async function DELETE(
 	request: Request
@@ -38,6 +45,10 @@ export async function POST(
 	const data = await request.json();
 	const ts = new Date();
 
+	if (!meta?.session?._id) return new Response(null, {
+		status: 401,
+	});
+
 	const { db, hostname } = meta;
 	const { category, _id } = paramList;
 
@@ -46,32 +57,49 @@ export async function POST(
 	delete data.updated;
 	delete data.created;
 	delete data.hosts;
+	delete data.owners;
 
 	const create = _id === '_' || _id.length != 24;
 
-	const doc:any = await db.collection('profiles').findOneAndUpdate({
-		category: category,
-		_id: create ? new ObjectId(): new ObjectId(_id),
-	}, {
-		$set: {
-			touched: ts,
-			...data,
-		},
-		$addToSet: {
-			hosts: hostname,
-		},
-		$setOnInsert: {
-			created: ts,
-			updated: ts,
-			category: category,
-		},
-	}, {
-		upsert: true,
-		returnDocument: 'after',
-		projection: {
-			password: 0, // Exclude password from the response
-		}
-	});
+	// might have to pre-fetch for given host
+
+	// compound key: slug, hostname
+
+	let doc: any = null; try {
+		doc = await db.collection('profiles').findOneAndUpdate({
+			_id: create ? new ObjectId() : new ObjectId(_id),
+			owners: meta.session._id,
+			//hosts: hostname, // Ensure the host is the one trying to modify
+		}, {
+			$set: {
+				touched: ts,
+				...data,
+			},
+			// $addToSet: {
+			// 	hosts: hostname,
+			// },
+			$setOnInsert: {
+				created: ts,
+				updated: ts,
+				category: category,
+				hosts: [hostname],
+				owners: [meta.session._id], // Ensure the owner is the session user
+			},
+		}, {
+			upsert: true,
+			returnDocument: 'after',
+			projection: {
+				password: 0, // Exclude password from the response
+			}
+		});
+	} catch (err: any)
+	{
+		//console.log(err.keyPattern);
+
+		return new Response(messages[err.codeName || 'DatabaseError'] || err.message, {
+			status: 500,
+		});
+	};
 
 	if (create && doc) return new Response(null, {
 		status: 303,

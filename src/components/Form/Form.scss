@@ -22,3 +22,19 @@
 	width: 100%;
 	justify-content: center;
 }
+
+.form nav {
+	display: flex;
+	justify-content: space-between;
+}
+
+.form nav .side {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.form nav .title {
+	font-size: 1.5em;
+	font-weight: bold;
+}
