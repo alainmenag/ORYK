@@ -72,17 +72,17 @@ export default async function RootLayout({
 				<Providers>{ children }</Providers>
 
 				<Script
-					src="/vendor/jquery-3.7.1.min.js?v=1.1.3"
+					src="/vendor/jquery-3.7.1.min.js?v=1.1.4"
 					strategy="afterInteractive"
 				/>
 
 				<Script
-					src="/vendor/utterscroll-master/jquery-scrollable.js?v=1.1.3"
+					src="/vendor/utterscroll-master/jquery-scrollable.js?v=1.1.4"
 					strategy="afterInteractive"
 				/>
 
 				<Script
-					src="/vendor/utterscroll-master/debiki-utterscroll.js?v=1.1.3"
+					src="/vendor/utterscroll-master/debiki-utterscroll.js?v=1.1.4"
 					strategy="afterInteractive"
 				/>
 

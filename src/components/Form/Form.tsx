@@ -1,6 +1,6 @@
 "use client";
 
-import './Form.scss?v=1.1.3';
+import './Form.scss?v=1.1.4';
 
 import Alert from '@mui/material/Alert';
 
@@ -120,9 +120,7 @@ export default function Form(props: any)
 	};
 
 	useEffect(() => {
-		if (props.src) setTimeout(() => {
-			loadData(props.src);
-		}, 0);
+		if (props.src) loadData(props.src);
 	}, []);
 
 	return (
@@ -162,20 +160,15 @@ export default function Form(props: any)
 					data={state.dataset}
 					changes={state.changes}
 				>{[
-					...(state.access.write ? [
-						{
-							type: 'submit',
-							label: 'Submit',
-							id: 'submit',
-							color: 'primary'
-						},
-					] : []),
+
 					{
-						type: 'reset',
-						label: 'Reload',
-						id: 'reset',
-						variant: null
+						type: state.loading ? 'spinner' : 'submit',
+						label: 'Submit',
+						id: 'submit',
+						color: 'primary',
+						disabled: !state.access.write,
 					},
+
 					...(state.access.delete ? [
 						{
 							type: 'button',
@@ -183,6 +176,7 @@ export default function Form(props: any)
 							value: 'delete',
 							id: 'delete',
 							color: 'error',
+							confirm: true,
 							onClick: (event:any) =>
 							{
 								handleSubmit({
@@ -196,6 +190,15 @@ export default function Form(props: any)
 							}
 						},
 					] : []),
+
+					{
+						type: 'reset',
+						label: 'Reload',
+						id: 'reset',
+						variant: null,
+						confirm: true,
+					},
+
 				]}</Elements>
 			</fieldset>
 

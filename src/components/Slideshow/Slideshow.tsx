@@ -1,5 +1,5 @@
 
-import './Slideshow.scss?v=1.1.3';
+import './Slideshow.scss?v=1.1.4';
 
 import Blocks from '../Blocks/Blocks';
 

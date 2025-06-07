@@ -1,11 +1,13 @@
 import React, {
 	//ReactNode
+	useState,
 } from 'react';
 
 import Skeleton from '@mui/material/Skeleton';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-
+import ButtonGroup from '@mui/material/ButtonGroup';
+import CircularProgress from '@mui/material/CircularProgress';
 interface ElementsProps {
 	children?: any;
 	loading?: boolean;
@@ -22,6 +24,8 @@ const Elements: React.FC<ElementsProps> = (props:any) =>
 	const data = props.data || {};
 	const changes = props.changes || {};
 
+	const [reconfirm, setReconfirm] = useState('');
+
 	const loaders:any = {
 		text: { variant: 'text', width: '100%', height: '60px' },
 		password: { variant: 'text', width: '100%', height: '60px' },
@@ -34,7 +38,15 @@ const Elements: React.FC<ElementsProps> = (props:any) =>
 		<>
 			{elements.map(function (element: any, index: number) {
 
-				if (loading) {
+				if (element.type === 'spinner') {
+					return (
+						<div key={index} className="element">
+							<CircularProgress />
+						</div>
+					);
+				}
+
+				else if (loading) {
 					return (
 						<div key={index} className="element">
 							<Skeleton
@@ -98,18 +110,57 @@ const Elements: React.FC<ElementsProps> = (props:any) =>
 					);
 				}
 
-				else if (['button', 'reset', 'submit', 'delete'].includes(element.type)) {
+				else if (['button', 'reset', 'submit'].includes(element.type))
+				{
+					const label = reconfirm === element.id ? 'CONFIRM' : (element.label || `Button ${ element.id }`).trim().toUpperCase();
+
+					let variant = element.variant === null ? null : element.variant || 'contained';
+
+					if (reconfirm == element.id) variant = 'outlined';
+
 					return (
 						<div key={ index } className="element">
-							<Button
-								variant={ element.variant === null ? null : element.variant || 'contained' }
-								type={ element.type || 'button' }
-								color={ element.color || 'primary' }
-								value={ element.value || null }
-								onClick={ element.onClick || null }
+							<ButtonGroup
+								//disableElevation
+								sx={{ width: '100%' }}
 							>
-									{(element.label || `Button ${ element.id }`).trim().toUpperCase()}
-							</Button>
+
+								<Button
+									variant={ variant }
+									type={ element.type || 'button' }
+									color={ element.color || 'primary' }
+									value={ element.value || null }
+									sx={{ width: '100%' }}
+									onClick={ (event) =>
+									{
+										if (element.confirm && reconfirm != element.id)
+										{
+											event.preventDefault();
+
+											setReconfirm(element.id);
+
+											return;
+										}
+
+										setReconfirm('');
+
+										if (element.onClick) element.onClick();
+									} }
+								>{ label }</Button>
+
+								{ reconfirm == element.id ? (
+									<Button
+										variant={ 'contained' }
+										type={ element.type || 'button' }
+										color={ element.color || 'primary' }
+										value={ element.value || null }
+										onClick={ () => {
+											setReconfirm('');
+										}}
+									>No</Button>
+								) : null }
+
+							</ButtonGroup>
 						</div>
 					);
 				}

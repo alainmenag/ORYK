@@ -8,7 +8,7 @@ import Cookies from 'js-cookie'
 import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
 
-import './Access.scss?v=1.1.3';
+import './Access.scss?v=1.1.4';
 import { useRouter } from 'next/navigation';
 
 export default function Access(attrs: any)

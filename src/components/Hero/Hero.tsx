@@ -1,5 +1,5 @@
 
-import './Hero.scss?v=1.1.3';
+import './Hero.scss?v=1.1.4';
 
 import Blocks from '../Blocks/Blocks';
 
