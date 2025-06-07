@@ -15,6 +15,15 @@
 	border: none;
 }
 
+.form fieldset legend {
+	padding-top: 10px;
+	padding-bottom: 5px;
+	width: 100%;
+	display: flex;;
+	text-transform: uppercase;
+	font-weight: bold;
+}
+
 .form fieldset .element {
 	display: flex;
 	flex-direction: column;

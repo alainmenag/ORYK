@@ -139,11 +139,11 @@ export async function getLocation({ props }: any)
 	const meta = await getMeta({ props });
 
 	meta.provider.colors = {
-		primary: '#757575',
-		secondary: '#2196F3',
-		light: '#f2f2f2',
-		dark: '#424242',
-		background: '#ffffff',
+		primary: '#757575', // #757575
+		secondary: '#CCCCCC',
+		light: '#F2F2F2',
+		dark: '#333333',
+		background: '#000000',
 		...(meta.provider.colors || {}),
 	};
 

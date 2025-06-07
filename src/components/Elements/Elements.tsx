@@ -8,6 +8,8 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import CircularProgress from '@mui/material/CircularProgress';
+
+//import { Chrome } from '@uiw/react-color';
 interface ElementsProps {
 	children?: any;
 	loading?: boolean;
@@ -16,17 +18,18 @@ interface ElementsProps {
 	readOnly?: boolean;
 }
 
-const Elements: React.FC<ElementsProps> = (props:any) =>
-{
+const Elements: React.FC<ElementsProps> = (props: any) => {
 	const { children, loading = false, readOnly = false } = props;
 
 	const elements: any = children || [];
 	const data = props.data || {};
 	const changes = props.changes || {};
 
+	//const [ states, setStates ] = useState<any>({});
+
 	const [reconfirm, setReconfirm] = useState('');
 
-	const loaders:any = {
+	const loaders: any = {
 		text: { variant: 'text', width: '100%', height: '60px' },
 		password: { variant: 'text', width: '100%', height: '60px' },
 		number: { variant: 'text', width: '100%', height: '60px' },
@@ -59,7 +62,25 @@ const Elements: React.FC<ElementsProps> = (props:any) =>
 					);
 				}
 
-				else if (['text', 'password', 'number', 'textarea'].includes(element.type)) {
+				else if ([
+					'text',
+					'password',
+					'number',
+					'textarea',
+					'email',
+					'color',
+				].includes(element.type)) {
+
+					let value = data[element.id] || '';
+
+					// If nested object, resolve the value
+					if (element.id.includes('.'))
+					{
+						const keys = element.id.split('.');
+
+						value = keys.reduce((acc:any, key:any) => acc && acc[key], data);
+					}
+					
 					return (
 						<div key={index} className="element">
 							<TextField
@@ -71,11 +92,6 @@ const Elements: React.FC<ElementsProps> = (props:any) =>
 								placeholder={element.placeholder || ''}
 								required={element.required}
 								multiline={element.type === 'textarea'}
-								//min={element.min || ''}
-								//max={element.max || ''}
-								//step={element.step || ''}
-								//pattern={element.pattern || null}
-								//defaultValue={element.defaultValue || ''}
 								helperText={element.help || ''}
 								disabled={readOnly || element.disabled || false}
 								autoComplete={element.autoComplete || 'off'}
@@ -90,19 +106,17 @@ const Elements: React.FC<ElementsProps> = (props:any) =>
 								aria-controls={element['aria-controls'] || ''}
 								aria-activedescendant={element['aria-activedescendant'] || ''}
 								aria-haspopup={element['aria-haspopup'] || false}
-								defaultValue={data[element.id] || ''}
-								onChange={ (event:any) =>
-								{
+								defaultValue={value}
+								onChange={(event: any) => {
 									const value = event.target.value;
 
 									// test if regex
-									if (element.regex && !new RegExp(element.regex).test(value))
-									{
+									if (element.regex && !new RegExp(element.regex).test(value)) {
 										return event.target.value = '';
 									}
 
 									data[element.id] = value;
-									
+
 									changes[element.id] = Date.now();
 								}}
 							/>
@@ -110,31 +124,50 @@ const Elements: React.FC<ElementsProps> = (props:any) =>
 					);
 				}
 
-				else if (['button', 'reset', 'submit'].includes(element.type))
-				{
-					const label = reconfirm === element.id ? 'CONFIRM' : (element.label || `Button ${ element.id }`).trim().toUpperCase();
+				/*
+				else if (['color'].includes(element.type)) {
+					return (
+						<div key={index} className="element no-scroll" style={{
+							position: 'relative',
+						}}>
+							<Chrome
+								style={{ position: 'absolute', top: 0, left: 0, zIndex: 1000 }}
+								color={states[element.id] || '#333333'}
+								onChange={(color) =>
+								{
+									setStates({
+										...states,
+										[element.id]: color.hex,
+									});
+								}}
+							/>
+						</div>
+					);
+				}
+					*/
+
+				else if (['button', 'reset', 'submit'].includes(element.type)) {
+					const label = reconfirm === element.id ? 'CONFIRM' : (element.label || `Button ${element.id}`).trim().toUpperCase();
 
 					let variant = element.variant === null ? null : element.variant || 'contained';
 
 					if (reconfirm == element.id) variant = 'outlined';
 
 					return (
-						<div key={ index } className="element">
+						<div key={index} className="element">
 							<ButtonGroup
 								//disableElevation
 								sx={{ width: '100%' }}
 							>
 
 								<Button
-									variant={ variant }
-									type={ element.type || 'button' }
-									color={ element.color || 'primary' }
-									value={ element.value || null }
+									variant={variant}
+									type={element.type || 'button'}
+									color={element.color || 'primary'}
+									value={element.value || null}
 									sx={{ width: '100%' }}
-									onClick={ (event) =>
-									{
-										if (element.confirm && reconfirm != element.id)
-										{
+									onClick={(event) => {
+										if (element.confirm && reconfirm != element.id) {
 											event.preventDefault();
 
 											setReconfirm(element.id);
@@ -145,20 +178,20 @@ const Elements: React.FC<ElementsProps> = (props:any) =>
 										setReconfirm('');
 
 										if (element.onClick) element.onClick();
-									} }
-								>{ label }</Button>
+									}}
+								>{label}</Button>
 
-								{ reconfirm == element.id ? (
+								{reconfirm == element.id ? (
 									<Button
-										variant={ 'contained' }
-										type={ element.type || 'button' }
-										color={ element.color || 'primary' }
-										value={ element.value || null }
-										onClick={ () => {
+										variant={'contained'}
+										type={element.type || 'button'}
+										color={element.color || 'primary'}
+										value={element.value || null}
+										onClick={() => {
 											setReconfirm('');
 										}}
 									>No</Button>
-								) : null }
+								) : null}
 
 							</ButtonGroup>
 						</div>
@@ -167,7 +200,7 @@ const Elements: React.FC<ElementsProps> = (props:any) =>
 
 				else {
 					return (
-						<div key={ index } className="element text-center">No element match.</div>
+						<div key={index} className="element text-center">No element match.</div>
 					);
 				}
 

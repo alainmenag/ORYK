@@ -45,12 +45,18 @@ export async function POST(
 	const data = await request.json();
 	const ts = new Date();
 
-	if (!meta?.session?._id) return new Response(null, {
-		status: 401,
-	});
+	if (!meta?.session?._id) return new Response(null, { status: 401 });
 
 	const { db, hostname } = meta;
 	const { category, _id } = paramList;
+
+
+	console.log('Modify:', category, _id, data);
+
+
+	//return new Response(null, { status: 401 });
+
+
 
 	delete data._id; // Remove _id from the data to avoid conflicts
 	delete data.category; // Remove category from the data to avoid conflicts

@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 
 import Script from "next/script";
 
+import GlobalContext from '../contexts/global';
+
 import { Providers } from '../helpers/providers';
 
 import 'normalize.css/normalize.css'; // for Normalize.css
@@ -50,26 +52,28 @@ export default async function RootLayout({
 
 				<style>
 					{`
-						:root {
-							--desktop: 1024px;
-							--tablet: 768px;
-							--mobile: 480px;
-						}
+							:root {
+								--desktop: 1024px;
+								--tablet: 768px;
+								--mobile: 480px;
+							}
 
-						.loading {
-							visibility: hidden;
-						}
-					`}
+							.loading {
+								visibility: hidden;
+							}
+						`}
 				</style>
 
 				<Style />
 
 			</head>
 			<body
-				className={ `${ geistSans.variable } ${ geistMono.variable } antialiased` }
+				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 			>
-				
-				<Providers>{ children }</Providers>
+
+				<GlobalContext>
+					<Providers>{children}</Providers>
+				</GlobalContext>
 
 				<Script
 					src="/vendor/jquery-3.7.1.min.js?v=1.1.4"

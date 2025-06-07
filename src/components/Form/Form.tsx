@@ -28,6 +28,7 @@ export default function Form(props: any) {
 			read: false,
 			write: false,
 			delete: false,
+			...(props.access || {}),
 		},
 	});
 
@@ -131,11 +132,15 @@ export default function Form(props: any) {
 			className='form'
 			onSubmit={handleSubmit}
 			onReset={handleReset}
+			style={{
+				margin: 'auto',
+				...(props.style || {}),
+			}}
 		>
 
 			<nav>
-				{props.leave ? (
-					<div className="side left">
+				<div className="side left">
+					{props.leave ? (
 						<div>
 							<IconButton onClick={() => router.push(props.leave)} title="Leave">
 								<Badge color="secondary">
@@ -143,9 +148,9 @@ export default function Form(props: any) {
 								</Badge>
 							</IconButton>
 						</div>
-						<div className="title">{ds?.title || ds?._id || `New`}</div>
-					</div>
-				) : null}
+					) : null}
+					<div className="title">{ds?.title || ds?._id || props.title}</div>
+				</div>
 
 				<div className="side right"></div>
 
@@ -156,22 +161,24 @@ export default function Form(props: any) {
 				<div>
 					<Alert
 						severity="error"
-						action={ <Button
+						action={<Button
 							color="inherit"
 							size="small"
 							title="Dismiss"
 							onClick={() => setState({ ...state, error: '' })}
 						>
 							<CheckIcon />
-						</Button> }
+						</Button>}
 					>{state.error}</Alert>
 				</div>
 			) : null}
 
 			{fieldsets.map((fieldset: any, i: any) => (
-				<fieldset key={i}>
-					{fieldset.label ? (
-						<legend>{fieldset.label}</legend>
+				<fieldset key={i} style={{
+					...(fieldset.style || {}),
+				}}>
+					{fieldset.title ? (
+						<legend>{fieldset.title}</legend>
 					) : null}
 					<Elements
 						loading={state.loading}
@@ -189,6 +196,7 @@ export default function Form(props: any) {
 					changes={state.changes}
 				>{[
 
+					...(props.action ? [
 					{
 						type: state.loading ? 'spinner' : 'submit',
 						label: 'Submit',
@@ -196,6 +204,7 @@ export default function Form(props: any) {
 						color: 'primary',
 						disabled: !state.access.write,
 					},
+					] : []),
 
 					...(state.access.delete ? [
 						{
@@ -218,13 +227,15 @@ export default function Form(props: any) {
 						},
 					] : []),
 
-					{
-						type: 'reset',
-						label: 'Reload',
-						id: 'reset',
-						variant: null,
-						confirm: true,
-					},
+					...(props.src ? [
+						{
+							type: 'reset',
+							label: 'Reload',
+							id: 'reset',
+							variant: null,
+							confirm: true,
+						},
+					] : []),
 
 				]}</Elements>
 			</fieldset>

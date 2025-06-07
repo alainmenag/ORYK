@@ -1,6 +1,8 @@
 
 "use client";
 
+import Link from 'next/link';
+
 import Table from '../../../components/Table/Table';
 
 export default function Page() {
@@ -14,15 +16,14 @@ export default function Page() {
 						field: '_id',
 						headerName: 'ID',
 						minWidth: 240,
-						visible: false,
-						valueFormatter: (value:any) =>
-						{
-							return `${value}`;
-						}
+						visible: true,
+						renderCell: (params:any) => (
+							<Link href={`/site/variables/${params.value}`} style={{ textDecoration: 'none', color: 'inherit' }}>{params.value}</Link>
+						)
 					},
 					{
-						field: 'name',
-						headerName: 'Name',
+						field: 'title',
+						headerName: 'Key',
 						valueFormatter: (value:any) =>
 						{
 							return `${value}`;

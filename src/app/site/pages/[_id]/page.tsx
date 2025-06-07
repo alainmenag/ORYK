@@ -28,7 +28,7 @@ export default async function Page({ params }: any)
 								id: 'slug',
 								label: 'Slug',
 								type: 'text',
-								required: true,
+								required: false,
 								regex: '^/.*$',
 								help: 'Ex: /path/to/page',
 							},

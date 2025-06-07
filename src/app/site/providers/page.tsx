@@ -29,13 +29,6 @@ export default function Page() {
 							return `${value}`;
 						}
 					},
-					{
-						field: 'slug',
-						headerName: 'Slug',
-						renderCell: (params:any) => (
-							<Link href={params.value} style={{ textDecoration: 'none', color: 'inherit' }}>{params.value}</Link>
-						)
-					},
 				]}
 				links={{
 					'add': '/site/providers/_',

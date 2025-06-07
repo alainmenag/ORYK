@@ -24,14 +24,6 @@ export default async function Page({ params }: any)
 								required: true,
 								help: 'Ex: Hotel California',
 							},
-							{
-								id: 'slug',
-								label: 'Slug',
-								type: 'text',
-								required: true,
-								regex: '^/.*$',
-								help: 'Ex: /provider',
-							},
 						],
 					},
 					{
@@ -41,6 +33,22 @@ export default async function Page({ params }: any)
 								id: 'description',
 								label: 'Description',
 								type: 'textarea',
+							},
+						],
+					},
+					{
+						id: 'colors',
+						title: 'Colors',
+						fields: [
+							{
+								id: 'colors.primary',
+								label: 'Primary',
+								type: 'color',
+							},
+							{
+								id: 'colors.secondary',
+								label: 'Secondary',
+								type: 'color',
 							},
 						],
 					}

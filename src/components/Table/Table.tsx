@@ -18,13 +18,13 @@ import {
 	ColumnsPanelTrigger,
 	FilterPanelTrigger,
 	ExportCsv,
-	ExportPrint,
+	//ExportPrint,
 } from '@mui/x-data-grid';
 
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import CachedIcon from '@mui/icons-material/Cached';
 import ViewColumnIcon from '@mui/icons-material/ViewColumn';
-import LocalPrintshopIcon from '@mui/icons-material/LocalPrintshop';
+//import LocalPrintshopIcon from '@mui/icons-material/LocalPrintshop';
 import AddIcon from '@mui/icons-material/Add';
 import FilterListIcon from '@mui/icons-material/FilterList';
 
@@ -79,14 +79,14 @@ const CustomToolbar = ({ scope }: { scope?: any }) => {
 				/>
 			</Tooltip>
 
-			<Tooltip title="Print">
+			{/* <Tooltip title="Print">
 				<ExportPrint
 					onClick={() => scope.handleSearch({ event: 'exportPrint' })}
 					render={<ToolbarButton />}
 				>
 					<LocalPrintshopIcon fontSize="small" />
 				</ExportPrint>
-			</Tooltip>
+			</Tooltip> */}
 
 			<Tooltip title="CSV">
 				<ExportCsv
