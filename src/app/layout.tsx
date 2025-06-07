@@ -5,8 +5,7 @@ import Script from "next/script";
 
 import { Providers } from '../helpers/providers';
 
-// import 'primereact/resources/primereact.min.css';
-// import "primereact/resources/themes/lara-light-cyan/theme.css";
+import 'normalize.css/normalize.css'; // for Normalize.css
 
 import 'primereact/resources/primereact.min.css'; // for PrimeReact core styles
 import 'primereact/resources/themes/lara-light-indigo/theme.css'; // for theme
@@ -73,17 +72,17 @@ export default async function RootLayout({
 				<Providers>{ children }</Providers>
 
 				<Script
-					src="/vendor/jquery-3.7.1.min.js?v=1.1.2"
+					src="/vendor/jquery-3.7.1.min.js?v=1.1.3"
 					strategy="afterInteractive"
 				/>
 
 				<Script
-					src="/vendor/utterscroll-master/jquery-scrollable.js?v=1.1.2"
+					src="/vendor/utterscroll-master/jquery-scrollable.js?v=1.1.3"
 					strategy="afterInteractive"
 				/>
 
 				<Script
-					src="/vendor/utterscroll-master/debiki-utterscroll.js?v=1.1.2"
+					src="/vendor/utterscroll-master/debiki-utterscroll.js?v=1.1.3"
 					strategy="afterInteractive"
 				/>
 

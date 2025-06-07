@@ -1,6 +1,6 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+// @tailwind base;
+// @tailwind components;
+// @tailwind utilities;
 
 @fontsource/roboto/300.css;
 @fontsource/roboto/400.css;
@@ -35,27 +35,17 @@ h2 {
 	@apply text-2xl font-bold text-gray-800;
 }
 
-form input[type="text"],
-form input[type="password"],
-form input[type="email"],
-form input[type="tel"],
-form input[type="number"] {
-	@apply border-2 border-gray-300 rounded-lg p-2;
-	color: #333;
-	width: 100%;
-	padding: 15px;
+a {
+	text-decoration: none;
 }
 
-form button {
-	@apply bg-gray-800 text-white font-bold py-2 px-4 rounded;
-	color: #333;
+li,
+ul {
+	@apply list-none;
+	margin: 0;
+	padding: 0;
 }
 
-form button:hover {
-	@apply bg-gray-700 text-white;
-}
-
-form button:disabled {
-	@apply cursor-not-allowed;
-	filter: opacity(0.25);
+.text-center {
+	text-align: center;
 }

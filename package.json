@@ -36,6 +36,7 @@
 		"mongodb": "^6.16.0",
 		"next": "^15.3.2",
 		"next-plugin-svgr": "^1.1.12",
+		"normalize.css": "^8.0.1",
 		"npm": "^11.4.1",
 		"primeicons": "^7.0.0",
 		"primereact": "^10.9.5",

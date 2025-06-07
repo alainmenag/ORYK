@@ -1,5 +1,5 @@
 
-import './Icon.scss?v=1.1.2';
+import './Icon.scss?v=1.1.3';
 
 //import Image from 'next/image';
 

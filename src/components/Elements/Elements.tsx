@@ -1,96 +1,128 @@
+import React, {
+	//ReactNode
+} from 'react';
 
-import Link from 'next/link';
-import Image from 'next/image';
+import Skeleton from '@mui/material/Skeleton';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 
-import Text from '../Text/Text';
-import Icon from '../Icon/Icon';
+interface ElementsProps {
+	children?: any;
+	loading?: boolean;
+	data?: any;
+	changes?: any;
+	readOnly?: boolean;
+}
 
-export default async function Card(attrs: any) {
+const Elements: React.FC<ElementsProps> = (props:any) =>
+{
+	const { children, loading = false, readOnly = false } = props;
+
+	const elements: any = children || [];
+	const data = props.data || {};
+	const changes = props.changes || {};
+
+	const loaders:any = {
+		text: { variant: 'text', width: '100%', height: '60px' },
+		password: { variant: 'text', width: '100%', height: '60px' },
+		number: { variant: 'text', width: '100%', height: '60px' },
+		textarea: { variant: 'text', width: '100%', height: '120px' },
+		fallback: { variant: 'text', width: '100%' }
+	};
 
 	return (
 		<>
-			{Object.keys(attrs).map((attr, $index) => {
+			{elements.map(function (element: any, index: number) {
 
-				//console.log(attr, attrs[attr]);
-
-				if (attr === 'list') {
+				if (loading) {
 					return (
-						<ul key={$index} className='list'>
-							{Array.isArray(attrs[attr]) && attrs[attr].map((item: any, idx: number) => (
-								<li key={idx} className='item'>
-									{item.icon ? (
-										<Icon src={item.icon} width="20" height="20" alt="Icon" />
-									) : null}
-									<span className='text'>{item.description}</span>
-								</li>
-							))}
-						</ul>
-					);
-				}
-
-				else if (attr === 'actions' && attrs[attr]) {
-
-					return (
-						<div key={$index} className='actions'>
-							{Array.isArray(attrs[attr]) && attrs[attr].map((action: any, idx: number) => (
-								<Link
-									key={idx}
-									href={action.href || '#'}
-									className='action'
-								>
-									<span className='text'>{action.label}</span>
-								</Link>
-							))}
+						<div key={index} className="element">
+							<Skeleton
+								{...loaders[element.type] || loaders.fallback}
+								sx={{
+									transform: 'none',
+								}}
+							/>
 						</div>
 					);
 				}
 
-				else if (attr === 'price' && attrs[attr]) {
+				else if (['text', 'password', 'number', 'textarea'].includes(element.type)) {
 					return (
-						<div key={$index} className="price">
-							<span className="prefix">
-								{typeof attrs[attr] == 'object' && attrs[attr].length == 1 ? 'STARTING AT ' : null}
-								{typeof attrs[attr] == 'object' && attrs[attr].length > 1 ? 'BETWEEN ' : null}
-							</span>
-							<span className="symbol">$</span>
-							<span className="value">{attrs[attr].join(' - ')}</span>
+						<div key={index} className="element">
+							<TextField
+								id={element.id}
+								label={element.label || ''}
+								variant={element.variant || 'filled'}
+								name={element.id}
+								type={element.type}
+								placeholder={element.placeholder || ''}
+								required={element.required}
+								multiline={element.type === 'textarea'}
+								//min={element.min || ''}
+								//max={element.max || ''}
+								//step={element.step || ''}
+								//pattern={element.pattern || null}
+								//defaultValue={element.defaultValue || ''}
+								helperText={element.help || ''}
+								disabled={readOnly || element.disabled || false}
+								autoComplete={element.autoComplete || 'off'}
+								autoFocus={element.autoFocus || false}
+								className={element.className || ''}
+								aria-label={element['aria-label'] || ''}
+								aria-describedby={element['aria-describedby'] || ''}
+								aria-required={element['aria-required'] || false}
+								aria-invalid={element['aria-invalid'] || false}
+								aria-errormessage={element['aria-errormessage'] || ''}
+								aria-autocomplete={element['aria-autocomplete'] || 'none'}
+								aria-controls={element['aria-controls'] || ''}
+								aria-activedescendant={element['aria-activedescendant'] || ''}
+								aria-haspopup={element['aria-haspopup'] || false}
+								defaultValue={data[element.id] || ''}
+								onChange={ (event:any) =>
+								{
+									const value = event.target.value;
+
+									// test if regex
+									if (element.regex && !new RegExp(element.regex).test(value))
+									{
+										return event.target.value = '';
+									}
+
+									data[element.id] = value;
+									
+									changes[element.id] = Date.now();
+								}}
+							/>
 						</div>
 					);
 				}
 
-				else if (attr === 'image' && attrs[attr]) {
+				else if (['button', 'reset', 'submit', 'delete'].includes(element.type)) {
 					return (
-						<Image className='image' key={$index} src={attrs[attr]} width="300" height="300" alt={attrs.alt || "Image"} />
+						<div key={ index } className="element">
+							<Button
+								variant={ element.variant === null ? null : element.variant || 'contained' }
+								type={ element.type || 'button' }
+								color={ element.color || 'primary' }
+								value={ element.value || null }
+								onClick={ element.onClick || null }
+							>
+									{(element.label || `Button ${ element.id }`).trim().toUpperCase()}
+							</Button>
+						</div>
 					);
 				}
 
-				else if (attr === 'title' || attr === 'heading') {
+				else {
 					return (
-						<Text key={$index} className={`${attr}`} {...attrs}>{attrs[attr]}</Text>
-					);
-				}
-
-				else if (attr === 'description') {
-					return (
-						<Text key={$index} className={`${attr}`} {...attrs}>{attrs[attr]}</Text>
-					);
-				}
-
-				/*
-				else if (typeof attrs[attr] === 'object' && attrs[attr] !== null) {
-					return (
-						<Text key={$index} className={`${attr}`} {...attrs}>{JSON.stringify(attrs[attr])}</Text>
-					);
-				}
-				*/
-
-				else if (typeof attrs[attr] === 'string') {
-					return (
-						<Text key={$index} className={`${attr}`} {...attrs}>{attrs[attr]}</Text>
+						<div key={ index } className="element text-center">No element match.</div>
 					);
 				}
 
 			})}
 		</>
 	);
-}
+};
+
+export default Elements;

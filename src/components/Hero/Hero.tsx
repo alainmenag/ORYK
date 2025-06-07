@@ -1,7 +1,7 @@
 
-import './Hero.scss?v=1.1.2';
+import './Hero.scss?v=1.1.3';
 
-import Elements from '../Elements/Elements';
+import Blocks from '../Blocks/Blocks';
 
 export default async function Hero(attrs: any) {
 
@@ -24,7 +24,7 @@ export default async function Hero(attrs: any) {
 						<div className='inside' style={{
 							backdropFilter: 'blur(15px)',
 						}}>
-							<Elements
+							<Blocks
 								alt={attrs.alt}
 								image={attrs.image}
 							/>
@@ -33,7 +33,7 @@ export default async function Hero(attrs: any) {
 				) : null}
 				<div className='side right'>
 					<div className='inside'>
-						<Elements
+						<Blocks
 							title={attrs.title}
 							heading={attrs.heading}
 							description={attrs.description}

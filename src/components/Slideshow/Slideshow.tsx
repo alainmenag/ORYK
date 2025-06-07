@@ -1,7 +1,7 @@
 
-import './Slideshow.scss?v=1.1.2';
+import './Slideshow.scss?v=1.1.3';
 
-import Elements from '../Elements/Elements';
+import Blocks from '../Blocks/Blocks';
 
 export default async function Slideshow(attrs: any) {
 	const style: any = {
@@ -18,7 +18,7 @@ export default async function Slideshow(attrs: any) {
 	return (
 		<div className={`slideshow`} style={style}>
 			<div className="inside">
-				<Elements
+				<Blocks
 					title={attrs.title}
 					heading={attrs.heading}
 					description={attrs.description}

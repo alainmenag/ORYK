@@ -2,7 +2,7 @@
 import React from 'react';
 import { Splitter, SplitterPanel } from 'primereact/splitter';
 
-import './site.scss?v=1.1.2';
+import './site.scss?v=1.1.3';
 
 import Nav from '../../components/Nav/Nav';
 
